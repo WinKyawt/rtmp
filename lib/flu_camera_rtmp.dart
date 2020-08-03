@@ -1,220 +1,3 @@
-import 'package:flutter_ijkplayer/flutter_ijkplayer.dart';
-import 'package:flutter/material.dart';
-
-void main() => runApp(HomePage());
-
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  IjkMediaController controller = IjkMediaController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.videocam),
-              onPressed: null,
-            ),
-          ],
-        ),
-        body: Container(
-          // width: MediaQuery.of(context).size.width,
-          // height: 400,
-          child: ListView(children: <Widget>[
-            buildIjkPlayer(),
-          ]),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.play_arrow),
-          onPressed: () async {
-            await controller.setNetworkDataSource(
-                'rtmp://23.225.228.227/live/hall',
-                // 'rtmp://172.16.100.245/live1',
-                // 'https://www.sample-videos.com/video123/flv/720/big_buck_bunny_720p_10mb.flv',
-//              "https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
-                // 'http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8',
-                // "file:///sdcard/Download/Sample1.mp4",
-                autoPlay: true);
-            print("set data source success");
-            // controller.playOrPause();
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget buildIjkPlayer() {
-    return Container(
-      // height: 400, // 这里随意
-      child: IjkPlayer(
-        mediaController: controller,
-      ),
-    );
-  }
-}
-
-// import 'package:flutter/material.dart';
-// import 'package:gplayer/gplayer.dart';
-
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatefulWidget {
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   GPlayer player;
-//   @override
-//   void initState() {
-//     super.initState();
-//     //1.create & init player
-//     player = GPlayer(uri: 'rtmp://23.225.228.227/live/hall')
-//       ..init()
-//       ..addListener((_) {
-//         //update control button out of player
-//         setState(() {});
-//       });
-//   }
-
-//   @override
-//   void dispose() {
-//     player?.dispose(); //2.release player
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Video Demo',
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text('GPlayer'),
-//         ),
-//         body: player.display, //3.put the player display in Widget tree
-//         floatingActionButton: FloatingActionButton(
-//           onPressed: () {
-//             setState(() {
-//               player.isPlaying ? player.pause() : player.start();
-//             });
-//           },
-//           child: Icon(
-//             player.isPlaying ? Icons.pause : Icons.play_arrow,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'dart:async';
-
-// import 'package:flutter_rtmp/flutter_rtmp.dart';
-
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatefulWidget {
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   RtmpManager _manager;
-//   int count = 0;
-//   Timer _timer;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _manager = RtmpManager(onCreated: () {
-//       print("--- view did created ---");
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//           body: Center(
-//         child: SafeArea(
-//           child: Stack(
-//             fit: StackFit.expand,
-//             children: <Widget>[
-//               RtmpView(
-//                 manager: _manager,
-//               ),
-//               Container(
-//                 padding: EdgeInsets.only(top: 20),
-//                 alignment: Alignment.topLeft,
-//                 child: Row(
-//                   children: <Widget>[
-//                     IconButton(
-//                       icon: Icon(Icons.play_arrow),
-//                       onPressed: () {
-//                         _manager.living(url: "rtmp://23.225.228.227/live/hall");
-//                         if (_timer == null)
-//                           _timer ??= Timer.periodic(Duration(seconds: 1), (_) {
-//                             setState(() {
-//                               count += 1;
-//                             });
-//                           });
-//                       },
-//                     ),
-//                     IconButton(
-//                       icon: Icon(Icons.pause),
-//                       onPressed: () {
-//                         _manager.pauseLive();
-//                         if (_timer != null) {
-//                           _timer.cancel();
-//                           _timer = null;
-//                         }
-//                         ;
-//                       },
-//                     ),
-//                     IconButton(
-//                       icon: Icon(Icons.switch_camera),
-//                       onPressed: () {
-//                         _manager.switchCamera();
-//                       },
-//                     ),
-//                     Container(
-//                       child: Text(
-//                         "${count ~/ 60}:${count % 60}",
-//                         style: TextStyle(fontSize: 17, color: Colors.blue),
-//                       ),
-//                     )
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       )),
-//     );
-//   }
-// }
-
 // import 'dart:async';
 // import 'dart:io';
 
@@ -257,15 +40,17 @@ class _HomePageState extends State<HomePage> {
 //   VoidCallback videoPlayerListener;
 //   bool enableAudio = true;
 //   bool useOpenGL = true;
-//   TextEditingController _textFieldController = TextEditingController(
-//       text: "rtmp://23.225.228.227/live/hall");
+//   TextEditingController _textFieldController =
+//       TextEditingController(text: "rtmp://23.225.228.227/live/hall");
 
 //   Timer _timer;
+//   List<CameraDescription> cameras = [];
 
 //   @override
 //   void initState() {
 //     super.initState();
 //     WidgetsBinding.instance.addObserver(this);
+//     getCamera();
 //   }
 
 //   @override
@@ -343,6 +128,15 @@ class _HomePageState extends State<HomePage> {
 //         ],
 //       ),
 //     );
+//   }
+
+//   getCamera() async {
+//     try {
+//       WidgetsFlutterBinding.ensureInitialized();
+//       cameras = await availableCameras();
+//     } on CameraException catch (e) {
+//       logError(e.code, e.description);
+//     }
 //   }
 
 //   /// Display the preview from the camera (or a message if the preview is not available).
@@ -451,7 +245,9 @@ class _HomePageState extends State<HomePage> {
 //               : null,
 //         ),
 //         IconButton(
-//           icon: controller != null && (controller.value.isRecordingPaused || controller.value.isStreamingPaused)
+//           icon: controller != null &&
+//                   (controller.value.isRecordingPaused ||
+//                       controller.value.isStreamingPaused)
 //               ? Icon(Icons.play_arrow)
 //               : Icon(Icons.pause),
 //           color: Colors.blue,
@@ -678,12 +474,12 @@ class _HomePageState extends State<HomePage> {
 
 //   Future<void> pauseVideoRecording() async {
 //     try {
-//      if (controller.value.isRecordingVideo) {
-//        await controller.pauseVideoRecording();
-//      }
-//      if (controller.value.isStreamingVideoRtmp) {
-//        await controller.pauseVideoStreaming();
-//      }
+//       if (controller.value.isRecordingVideo) {
+//         await controller.pauseVideoRecording();
+//       }
+//       if (controller.value.isStreamingVideoRtmp) {
+//         await controller.pauseVideoStreaming();
+//       }
 //     } on CameraException catch (e) {
 //       _showCameraException(e);
 //       rethrow;
@@ -692,12 +488,12 @@ class _HomePageState extends State<HomePage> {
 
 //   Future<void> resumeVideoRecording() async {
 //     try {
-//      if (controller.value.isRecordingVideo) {
-//        await controller.resumeVideoRecording();
-//      }
-//      if (controller.value.isStreamingVideoRtmp) {
-//        await controller.resumeVideoStreaming();
-//      }
+//       if (controller.value.isRecordingVideo) {
+//         await controller.resumeVideoRecording();
+//       }
+//       if (controller.value.isStreamingVideoRtmp) {
+//         await controller.resumeVideoStreaming();
+//       }
 //     } on CameraException catch (e) {
 //       _showCameraException(e);
 //       rethrow;
@@ -910,54 +706,13 @@ class _HomePageState extends State<HomePage> {
 //   }
 // }
 
-// List<CameraDescription> cameras = [];
-
-// Future<void> main() async {
-//   // Fetch the available cameras before initializing the app.
-//   try {
-//     WidgetsFlutterBinding.ensureInitialized();
-//     cameras = await availableCameras();
-//   } on CameraException catch (e) {
-//     logError(e.code, e.description);
-//   }
-//   runApp(CameraApp());
-// }
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Video Player'),
-//       ),
-//       body: ListView(
-//         children: <Widget>[
-
-//           ChewieListItem(
-//             videoPlayerController: VideoPlayerController.network(
-//               'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-//             ),
-//           ),
-//           // ChewieListItem(
-//           //   // This URL doesn't exist - will display an error
-//           //   videoPlayerController: VideoPlayerController.network(
-//           //     'rtmp://23.225.228.227/live/hall',
-//           //   ),
-//           // ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+// // Future<void> main() async {
+// //   // Fetch the available cameras before initializing the app.
+// //   try {
+// //     WidgetsFlutterBinding.ensureInitialized();
+// //     cameras = await availableCameras();
+// //   } on CameraException catch (e) {
+// //     logError(e.code, e.description);
+// //   }
+// //   runApp(CameraApp());
+// // }
